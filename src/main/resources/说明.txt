@@ -1,0 +1,9 @@
+1.hosts;
+    #kafka
+        172.16.2.252 emr-header-1 emr-header-1.cluster-64751
+        172.16.2.4 emr-worker-2 emr-worker-2.cluster-64751
+        172.16.2.2 emr-worker-1 emr-worker-1.cluster-64751
+2.白名单：
+    配置Hbase、kafka -> ECS
+3.启动命令：java -jar .\zhibo8warehouse-0.0.1-SNAPSHOT.jar -Xmx3550m -Xms3550m -Xmn2g -Xss128k
+4.测试访问路径：http://localhost:8080/warehouse/pinglun/getRowsCountArticleId?articleId=ar_1000
