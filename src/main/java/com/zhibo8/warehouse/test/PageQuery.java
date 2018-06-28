@@ -133,7 +133,7 @@ public class PageQuery {
             tbData.setTotalPage(getTotalPage(pageSize, i));
             tbData.setResultList(mapList);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             closeScanner(scanner);
         }

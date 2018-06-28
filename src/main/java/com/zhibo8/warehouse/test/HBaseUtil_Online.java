@@ -363,12 +363,12 @@ public class HBaseUtil_Online {
 //			scanner.close();
 //			pageModel.setResultList(resultList);
 //		} catch (Exception e) {
-//			e.printStackTrace();
+//			logger.error(e.getMessage(), e);
 //		} finally {
 //			try {
 //				table.close();
 //			} catch (IOException e) {
-//				e.printStackTrace();
+//				logger.error(e.getMessage(), e);
 //			}
 //		}
 //
@@ -416,12 +416,12 @@ public class HBaseUtil_Online {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 table.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
         return null;
@@ -441,8 +441,8 @@ public class HBaseUtil_Online {
 //			@Override
 //			public void onException(RetriesExhaustedWithDetailsException e, BufferedMutator mutator) {
 //				for (int i = 0; i < e.getNumExceptions(); i++) {
-//					System.out.println("Failed to sent put " + e.getRow(i) + ".");
-//					logger.error("Failed to sent put " + e.getRow(i) + ".");
+//					System.out.println("Failed to sent put " ,e.getRow(i) + ".");
+//					logger.error("Failed to sent put " ,e.getRow(i) + ".");
 //				}
 //			}
 //		};

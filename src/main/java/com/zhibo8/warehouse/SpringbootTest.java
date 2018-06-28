@@ -4,11 +4,17 @@ import com.zhibo8.warehouse.commons.Constants;
 import com.zhibo8.warehouse.commons.HBaseUtil;
 import com.zhibo8.warehouse.dao.ICommentDao;
 import com.zhibo8.warehouse.service.impl.PingLunServiceImpl;
+import com.zhibo8.warehouse.test.AliHbaseTest;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +31,8 @@ import static com.zhibo8.warehouse.commons.HBaseUtil.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringbootTest {
+    private static Logger logger = LoggerFactory.getLogger(AliHbaseTest.class);
+
     @Autowired
     private PingLunServiceImpl pingLunService;
     @Autowired
@@ -101,7 +109,7 @@ public class SpringbootTest {
             //批量增则rows
             ICommentDao.insertRows(Constants.COMMENT_TABLE_NAME, Constants.COMMENT_FAMILY, rows);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             HBaseUtil.closeTable(table);
             releaseConnection(conn);
@@ -166,12 +174,15 @@ public class SpringbootTest {
      */
     @Test
     public void truncateTable() {
-        initHbase();//初始化hbase 连接池
+        Configuration config = HBaseConfiguration.create();
+        //建立Hbase连接
+        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         String tableName_ = "bigdata:click_dev";//Constants.CLICK_TABLENAME;
         Connection conn = null;
         HBaseAdmin admin = null;
         try {
-            conn = getConnection();
+            conn = ConnectionFactory.createConnection(config);
             admin = getHBaseAdmin(conn);
             // 取得目标数据表的表名对象
             TableName tableName = TableName.valueOf(tableName_);
@@ -180,10 +191,10 @@ public class SpringbootTest {
             // 清空指定表的数据
             admin.truncateTable(tableName, true);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             closeAdmin(admin);
-            releaseConnection(conn);
+            closeConnect(conn);
         }
     }
 

@@ -1,9 +1,18 @@
 1.hosts;
     #kafka
+    内网：
         172.16.2.252 emr-header-1 emr-header-1.cluster-64751
-        172.16.2.4 emr-worker-2 emr-worker-2.cluster-64751
         172.16.2.2 emr-worker-1 emr-worker-1.cluster-64751
+        172.16.2.4 emr-worker-2 emr-worker-2.cluster-64751
+        172.16.2.155 emr-worker-5  emr-worker-5.cluster-64751
+        172.16.2.156 emr-worker-6  emr-worker-6.cluster-64751
+    公网：
+        120.55.59.107 emr-header-1.cluster-64751
+        121.196.199.76 emr-worker-1.cluster-64751
+        121.196.218.2 emr-worker-2.cluster-64751
+        121.196.212.84 emr-worker-5.cluster-64751
+        121.196.199.161 emr-worker-6.cluster-64751
 2.白名单：
-    配置Hbase、kafka -> ECS
+    配置 Hbase、kafka -> ECS
 3.启动命令：java -jar .\zhibo8warehouse-0.0.1-SNAPSHOT.jar -Xmx3550m -Xms3550m -Xmn2g -Xss128k
 4.测试访问路径：http://localhost:8080/warehouse/pinglun/getRowsCountArticleId?articleId=ar_1000

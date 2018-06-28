@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zhibo8</groupId>
-    <artifactId>zhibo8warehouse</artifactId>
+    <artifactId>springbootKafkaHbase</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <!--<packaging>war</packaging>-->
 
-    <name>zhibo8warehouse</name>
+    <name>springbootKafkaHbase</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>

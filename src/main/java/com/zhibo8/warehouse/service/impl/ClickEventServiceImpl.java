@@ -5,6 +5,8 @@ import com.zhibo8.warehouse.dao.IClickEventDao;
 import com.zhibo8.warehouse.service.IClickEventService;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ResultScanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.*;
 
 @Service
 public class ClickEventServiceImpl implements IClickEventService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
@@ -30,7 +33,7 @@ public class ClickEventServiceImpl implements IClickEventService {
             ResultScanner rsScanner = clickEventDao.queryByPrefix(conn, clickTableName, udid);
             recordList = HBaseUtil.toMapsFromResultScanner(rsScanner);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             HBaseUtil.releaseConnection(conn);
         }

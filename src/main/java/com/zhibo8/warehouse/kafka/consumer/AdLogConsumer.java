@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+import sun.font.TrueTypeFont;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @Component
 public class AdLogConsumer {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IAdLogDao adLogDao;
@@ -36,6 +37,10 @@ public class AdLogConsumer {
      */
     @KafkaListener(topics = "${kafka.consumer.topic-ad}", containerFactory = "batchFactory")
     public void listen(List<ConsumerRecord<?, ?>> records, Acknowledgment ack) {
-        HbaseMsgSender.save2Hbase(records, ack, table_ad, Constants.AD_FAMILY);
+        try {
+            HbaseMsgSender.save2Hbase(records, ack, table_ad, Constants.AD_FAMILY,true);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }

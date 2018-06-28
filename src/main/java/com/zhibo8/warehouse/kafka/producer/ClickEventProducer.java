@@ -21,11 +21,18 @@ public class ClickEventProducer {
     private String topic_click;
 
     public Map<String, Object> send(Map<String, Object> paramMap) {
+        if (paramMap == null && paramMap.size() == 0) return null;
         Map<String, Object> rsMap = new HashMap<>();
+        Map mapV = null;
         // clickEvent->V
         String v = String.valueOf(paramMap.remove("v"));
-        String decryptV = SecurityUtils.decrypt(v, SecurityUtils.key);
-        Map mapV = JSON.parseObject(decryptV, Map.class);
+        //如果v未加密，则不进行解密
+        if (v != null && v.startsWith("{") && v.endsWith("}")) {
+            mapV = JSON.parseObject(v, Map.class);
+        } else {
+            String decryptV = SecurityUtils.decrypt(v);
+            mapV = JSON.parseObject(decryptV, Map.class);
+        }
         if (mapV != null) {
             String event = String.valueOf(mapV.get("event"));
             String model = String.valueOf(mapV.get("model"));

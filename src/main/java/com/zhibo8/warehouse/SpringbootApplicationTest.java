@@ -9,8 +9,9 @@ import com.zhibo8.warehouse.kafka.rowKeyBuilder.CommentRowkeyBuilder;
 import com.zhibo8.warehouse.service.impl.PingLunServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,22 +23,19 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringbootApplicationTest {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private PingLunServiceImpl pingLunService;
     @Autowired
     private ICommentDao ICommentDao;
-    @Value("${hbase.zk_quorum}")
-    private String hbase_zookeeper_quorum;
-    @Value("${hbase.pool.initialSize}")
-    private int initialSize;
-    @Value("${hbase.pool.minIdle}")
-    private int minIdle;
-    @Value("${hbase.pool.maxActive}")
-    private int maxActive;
+    private String hbase_zookeeper_quorum ="hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+    private int initialSize = 1;
+    private int minIdle = 5;
+    private int maxActive = 5;
 
     private void initHbase() {
         String zkAddress = hbase_zookeeper_quorum;
-        HBaseUtil.init(1, 50, 2000L, zkAddress);
+        HBaseUtil.init(1, 1, 2000L, zkAddress);
     }
 
     @Autowired
@@ -55,7 +53,7 @@ public class SpringbootApplicationTest {
             Date date = new Date(ts);
             String createTime = simpleDateFormat.format(date);
             comment.setCreateTime(createTime);
-            comment.setUserId(i+"");
+            comment.setUserId(i + "");
             //准备插入数据
             String regionCode = CommentRowkeyBuilder.genRegionCode(comment, 50);
             String rowKey = CommentRowkeyBuilder.genRowKey(comment, regionCode);

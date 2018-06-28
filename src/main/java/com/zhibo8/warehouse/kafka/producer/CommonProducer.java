@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.FailureCallback;
 import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.SuccessCallback;
 
 import java.util.Map;
 
@@ -26,16 +28,28 @@ public class CommonProducer {
 
 
     public static boolean send(String topic, Map<String, Object> messageMap) {
-        //KafkaProducerPoolInitial.send(Constants.COMSUMER_TOPIC, JSON.toJSON(messageMap).toString());
-        //首条数据不会为addcallback()
-        ListenableFuture future = template.send(topic, JSON.toJSON(messageMap).toString());
-        future.addCallback(ok -> {
-            logger.info("消息发送成功：" + messageMap);
-            isSended = true;
-        }, throwable -> {
-            logger.info("消息发送失败：" + messageMap);
-            isSended = false;
-        });
+        //发送数据
+        ListenableFuture listenableFuture = template.send(topic, JSON.toJSON(messageMap).toString());
+        //发送成功后回调
+        SuccessCallback successCallback = new SuccessCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                logger.info("消息发送成功：" + messageMap);
+                isSended = true;
+            }
+        };
+
+        //发送失败回调
+        FailureCallback failureCallback = new FailureCallback() {
+            @Override
+            public void onFailure(Throwable e) {
+                logger.info("消息发送失败：" + messageMap);
+                logger.error("消息发送失败：" + messageMap + "\n" + e.getMessage(), e);
+                isSended = false;
+            }
+        };
+
+        listenableFuture.addCallback(successCallback, failureCallback);
         return isSended;
     }
 }

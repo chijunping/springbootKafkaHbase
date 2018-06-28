@@ -193,8 +193,8 @@
         <logger name="com.zhibo8.warehouse" level="warn"/>
         <root level="warn">
             <appender-ref ref="CONSOLE"/>
-            <!--<appender-ref ref="INFO_FILE" />-->
-            <!--<appender-ref ref="DEBUG_FILE" />-->
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="DEBUG_FILE" />
             <appender-ref ref="WARN_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>

@@ -8,6 +8,8 @@ import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
 import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -15,6 +17,7 @@ import static com.zhibo8.warehouse.commons.HBaseUtil.*;
 
 
 public class AliHbaseTest {
+    private static Logger logger = LoggerFactory.getLogger(AliHbaseTest.class);
 
     private static final String TABLE_NAME = "mytable2";
     private static final String CF_DEFAULT = "cf";
@@ -24,9 +27,11 @@ public class AliHbaseTest {
     public static void main(String[] args) {
         //建立Hbase连接
         Configuration config = HBaseConfiguration.create();
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
-        String zk = "47.97.35.217:2181";
-        config.set(HConstants.ZOOKEEPER_QUORUM, zk);
+        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
+        config.set(HConstants.HBASE_RPC_TIMEOUT_KEY, "300000");
+        config.set(HConstants.HBASE_META_SCANNER_CACHING, "1000");
+        config.set(HConstants.HBASE_CLIENT_SCANNER_CACHING, "1000");
         Connection connection = null;
         try {
             connection = ConnectionFactory.createConnection(config);
@@ -53,13 +58,13 @@ public class AliHbaseTest {
                 if (table != null) table.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -81,7 +86,7 @@ public class AliHbaseTest {
             admin.modifyTable(Bytes.toBytes(tableName), htd);
             admin.enableTable(tableName);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             HBaseUtil.closeConnect(connection);
         }
@@ -98,7 +103,7 @@ public class AliHbaseTest {
         try {
             rowCount = ac.rowCount(TableName.valueOf(tableName), new LongColumnInterpreter(), scan);
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return rowCount;
     }
@@ -111,7 +116,7 @@ public class AliHbaseTest {
                 rowCount += result.size();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return rowCount;
     }
@@ -130,7 +135,7 @@ public class AliHbaseTest {
                 System.out.println("Table " + tableName + " does not exist.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             closeTable(table);
             closeAdmin(admin);
@@ -147,12 +152,11 @@ public class AliHbaseTest {
     }
 
     @Test
-
     //计算表行数，为什么增加一条记录，行数加8？？？
     public void testTableRowCount2() {
         Configuration config = HBaseConfiguration.create();
         //建立Hbase连接
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         Connection connection = null;
         try {
@@ -160,12 +164,23 @@ public class AliHbaseTest {
             long rowCount = rowCount(connection, "comment");
             System.out.println("rowCount: " + rowCount);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             closeConnect(connection);
         }
     }
 
+    @Test
+    public void testHBase() throws Exception {
+        //建立Hbase连接
+        Configuration config = HBaseConfiguration.create();
+        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
+        config.set(HConstants.HBASE_RPC_TIMEOUT_KEY, "300000");
+        config.set(HConstants.HBASE_META_SCANNER_CACHING, "1000");
+        config.set(HConstants.HBASE_CLIENT_SCANNER_CACHING, "1000");
+        Connection conn = ConnectionFactory.createConnection(config);
 
+    }
 
 }

@@ -31,7 +31,7 @@ public class HbasePoolInitial implements CommandLineRunner {
     private Long maxWait;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
         HBaseUtil.init(initialSize,maxActive, maxWait, zkHost);
     }
 }

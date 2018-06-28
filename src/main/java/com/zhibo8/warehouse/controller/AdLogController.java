@@ -4,6 +4,7 @@ import com.zhibo8.warehouse.kafka.producer.AdLogProducer;
 import com.zhibo8.warehouse.kafka.producer.ClickEventProducer;
 import com.zhibo8.warehouse.service.IClickEventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class AdLogController {
 
     //andriod: http://118.178.168.156:8091/allOne.php?ad_name=news_list&_only_care=3
     //ios: http://118.178.168.156:8091/allOne.php?ad_name=news_list_ios&_only_care=3&pk=
-    @RequestMapping("/allOne.php")
+    @PostMapping("/allOne.php")
     public Map<String, Object> add(
             //andriod
             String ad_name,//
@@ -97,7 +98,7 @@ public class AdLogController {
         paramMap.put("ip", ip);
         paramMap.put("vendor", vendor);
         paramMap.put("model", model);
-        if (platform.contains("android")) {
+        if (platform != null && platform.contains("android")) {
             paramMap.put("ssid", ssid);
             paramMap.put("iem", iem);
             paramMap.put("version_name", version_name);

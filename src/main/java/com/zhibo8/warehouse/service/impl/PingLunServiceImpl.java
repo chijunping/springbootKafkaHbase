@@ -8,6 +8,8 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 
 @Service
 public class PingLunServiceImpl implements PingLunService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ICommentDao ICommentDao;
 
@@ -33,20 +37,20 @@ public class PingLunServiceImpl implements PingLunService {
 
 
     @Override
-    public List<Map<String,Object>> getRowsByArticleId(String userId_) {
+    public List<Map<String, Object>> getRowsByArticleId(String userId_) {
         List<Map<String, Object>> recordList = new ArrayList<>();
-        Connection conn =null;
+        Connection conn = null;
         try {
             conn = HBaseUtil.getConnection();
-            ResultScanner rsScanner= ICommentDao.queryByPrefix(conn , Constants.COMMENT_TABLE_NAME,userId_);
+            ResultScanner rsScanner = ICommentDao.queryByPrefix(conn, Constants.COMMENT_TABLE_NAME, userId_);
             for (Result row : rsScanner) {// 循环结果集
                 HashMap<String, Object> recordMap = new HashMap<>(); //用来封装解析后的row
                 String rowKey = new String(row.getRow());// rowKey
                 String userId = Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_USERID)));
                 String parentId = Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_PARENTID)));
                 String content = Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_CONTENT)));
-                String createTime =Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_CREATETIME)));
-                String status =Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_STATUS)));
+                String createTime = Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_CREATETIME)));
+                String status = Bytes.toString(row.getValue(Bytes.toBytes(Constants.COMMENT_FAMILY), Bytes.toBytes(Constants.COMMENT_STATUS)));
                 recordMap.put("rowKey", rowKey);
                 recordMap.put("userId", userId);
                 recordMap.put("parentId", parentId);
@@ -56,13 +60,12 @@ public class PingLunServiceImpl implements PingLunService {
                 recordList.add(recordMap);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-          HBaseUtil.releaseConnection(conn);
+            logger.error(e.getMessage(), e);
+        } finally {
+            HBaseUtil.releaseConnection(conn);
         }
         return recordList;
     }
-
 
 
 }

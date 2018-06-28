@@ -1,6 +1,5 @@
 package com.zhibo8.warehouse.kafka.consumer;
 
-import com.alibaba.fastjson.JSON;
 import com.zhibo8.warehouse.commons.Constants;
 import com.zhibo8.warehouse.dao.IClickEventDao;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -12,14 +11,12 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @Component
 public class ClickEventConsumer {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IClickEventDao clickEventDao;
@@ -34,6 +31,10 @@ public class ClickEventConsumer {
      */
     @KafkaListener(topics = "${kafka.consumer.topic-click}", containerFactory = "batchFactory")
     public void listen(List<ConsumerRecord<?, ?>> records, Acknowledgment ack) {
-        HbaseMsgSender.save2Hbase(records, ack, clickTableName, Constants.CLICK_FAMILY);
+        try {
+            HbaseMsgSender.save2Hbase(records, ack, clickTableName, Constants.CLICK_FAMILY,true);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }

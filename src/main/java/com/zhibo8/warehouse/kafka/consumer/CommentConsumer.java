@@ -48,8 +48,7 @@ public class CommentConsumer {
             }
             commentDao.insertRows(Constants.COMMENT_TABLE_NAME, Constants.COMMENT_FAMILY, rows);
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("消费kafka 往Hbase写入时异常：\n" + e.getMessage());
+            logger.error("消费kafka 往Hbase写入时异常: ",e);
         } finally {
             ack.acknowledge();//手动提交偏移量
             logger.info("complete commit offset");

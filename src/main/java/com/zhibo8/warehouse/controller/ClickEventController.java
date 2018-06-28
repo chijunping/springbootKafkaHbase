@@ -3,6 +3,7 @@ package com.zhibo8.warehouse.controller;
 import com.zhibo8.warehouse.kafka.producer.ClickEventProducer;
 import com.zhibo8.warehouse.service.IClickEventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,12 +54,12 @@ public class ClickEventController {
         paramMap.put("os", os);
         paramMap.put("os_version", os_version);
         paramMap.put("appname", appname);
-        if (_platform.contains("android")) {
+        if (_platform != null && _platform.contains("android")) {
             paramMap.put("mac", mac);
             paramMap.put("iemi", iemi);
             paramMap.put("version_name", version_name);
             paramMap.put("imei", imei);
-            paramMap.put("UDID", udid);//新增 UDID 参数，作设备唯一标识
+            paramMap.put("UDID", imei);//新增 UDID 参数，作设备唯一标识
             paramMap.put("android_id", android_id);
         } else {
             paramMap.put("device", device);
