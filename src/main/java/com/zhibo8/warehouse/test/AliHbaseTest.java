@@ -27,7 +27,7 @@ public class AliHbaseTest {
     public static void main(String[] args) {
         //建立Hbase连接
         Configuration config = HBaseConfiguration.create();
-        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         config.set(HConstants.HBASE_RPC_TIMEOUT_KEY, "300000");
         config.set(HConstants.HBASE_META_SCANNER_CACHING, "1000");
@@ -156,7 +156,7 @@ public class AliHbaseTest {
     public void testTableRowCount2() {
         Configuration config = HBaseConfiguration.create();
         //建立Hbase连接
-        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         Connection connection = null;
         try {
@@ -174,7 +174,7 @@ public class AliHbaseTest {
     public void testHBase() throws Exception {
         //建立Hbase连接
         Configuration config = HBaseConfiguration.create();
-        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         config.set(HConstants.HBASE_RPC_TIMEOUT_KEY, "300000");
         config.set(HConstants.HBASE_META_SCANNER_CACHING, "1000");

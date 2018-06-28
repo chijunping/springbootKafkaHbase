@@ -28,7 +28,7 @@ public class SpringbootApplicationTest {
     private PingLunServiceImpl pingLunService;
     @Autowired
     private ICommentDao ICommentDao;
-    private String hbase_zookeeper_quorum ="hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+    private String hbase_zookeeper_quorum ="hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
     private int initialSize = 1;
     private int minIdle = 5;
     private int maxActive = 5;

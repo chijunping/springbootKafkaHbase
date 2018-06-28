@@ -26,7 +26,7 @@ public class PageQuery {
     private static HTable table = null;
     private static TableName tn = null;
     private static final String ZK_CONNECT_KEY = "hbase.zookeeper.quorum";
-    private static final String ZK_CONNECT_VALUE = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+    private static final String ZK_CONNECT_VALUE = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
 
     static {
         try {

@@ -176,7 +176,7 @@ public class SpringbootTest {
     public void truncateTable() {
         Configuration config = HBaseConfiguration.create();
         //建立Hbase连接
-        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         String tableName_ = "bigdata:click_dev";//Constants.CLICK_TABLENAME;
         Connection conn = null;
@@ -214,7 +214,7 @@ public class SpringbootTest {
 
 
     private void initHbase() {
-        String zkAddress = "hb-proxy-pub-bp1987l1fy04etj46-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp1987l1fy04etj46-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         HBaseUtil.init(1, 50, 2000L, zkAddress);
     }
 
