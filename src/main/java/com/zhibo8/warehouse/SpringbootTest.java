@@ -67,7 +67,7 @@ public class SpringbootTest {
     @Test
     public void insertRows() {
         //{"contentId":"c_07","content":"评论7？","userId":"u_01","parentId":"u_00","articleId":"ar_002","age":32,"createTime":"2012-12-12 12:23:23","status":1}
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-pub-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
 
         HBaseUtil.init(1, 50, 2000L, zkAddress);
 
@@ -120,7 +120,7 @@ public class SpringbootTest {
     @Test
     public void insertRow() {
         //{"contentId":"c_07","content":"评论7？","userId":"u_01","parentId":"u_00","articleId":"ar_002","age":32,"createTime":"2012-12-12 12:23:23","status":1}
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-pub-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
 
         HBaseUtil.init(1, 50, 2000L, zkAddress);
         int threadCount = 30;

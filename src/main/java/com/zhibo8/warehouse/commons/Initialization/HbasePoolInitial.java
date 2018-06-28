@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * CommandLineRunner 接口的 Component 会在所有 Spring Beans 都初始化之后，SpringApplication.run() 之前执行，
  * 非常适合在应用程序启动之初进行一些数据初始化的工作。
  * <p>
- * hbase.zk_quorum=hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181
+ * hbase.zk_quorum=hb-proxy-pub-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-003.hbase.rds.aliyuncs.com:2181
  * hbase.zk_parent=/hbase
  * hbase.writeBufferSize=5242880 #1024*1024*5  5M
  * hbase.pool.initialSize=1

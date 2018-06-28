@@ -73,7 +73,7 @@ public class AliHbaseTest {
     public static void addTableCoprocessor(String tableName, String coprocessorClassName) {
         Configuration config = HBaseConfiguration.create();
         //建立Hbase连接
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-pub-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         String zk = "47.97.35.217:2181";
         config.set(HConstants.ZOOKEEPER_QUORUM, zk);
         Connection connection = null;
@@ -93,7 +93,7 @@ public class AliHbaseTest {
     }
 
     public static long rowCount(String tableName, String family) {
-        String zkAddress = "hb-proxy-pub-bp12mmg4lu45o4ivy-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-bp12mmg4lu45o4ivy-003.hbase.rds.aliyuncs.com:2181";
+        String zkAddress = "hb-proxy-pub-xxxxxx-001.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-002.hbase.rds.aliyuncs.com:2181,hb-proxy-pub-xxxxxx-003.hbase.rds.aliyuncs.com:2181";
         Configuration configuration = HBaseConfiguration.create();
         configuration.set(HConstants.ZOOKEEPER_QUORUM, zkAddress);
         AggregationClient ac = new AggregationClient(configuration);
